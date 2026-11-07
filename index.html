@@ -472,7 +472,7 @@ tailwind.config = {
       <button onclick="closePreview(true)" class="relative w-10 h-10 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center transition"><i class="fa-solid fa-xmark"></i></button>
     </div>
     <div class="flex-1 overflow-y-auto p-5 md:p-6" id="previewBody"></div>
-    <div class="border-t border-stone-200 p-4 flex gap-2 bg-white shrink-0">
+    <div class="border-t border-stone-200 p-4 flex gap-2 bg-white shrink-0" id="previewFooterBar">
       <button onclick="closePreview(true)" class="flex-1 btn btn-ghost !py-3 text-[14px]"><i class="fa-solid fa-pen text-xs"></i> এডিট করুন</button>
       <button id="confirmOrderBtn" onclick="confirmOrder()" class="flex-1 btn btn-primary !py-3 text-[14px]"><i class="fa-solid fa-circle-check text-xs"></i> কনফার্ম ও PDF</button>
     </div>
@@ -484,7 +484,7 @@ tailwind.config = {
 
 <button id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" class="fixed bottom-6 right-6 w-12 h-12 bg-brand-700 hover:bg-brand-800 text-white rounded-full shadow-lift flex items-center justify-center opacity-0 pointer-events-none translate-y-4 z-40 transition"><i class="fa-solid fa-arrow-up"></i></button>
 
-<!-- 🖼️ INVOICE TEMPLATE (off-screen) - Logo rendered as pure CSS (100% reliable in html2canvas) -->
+<!-- 🖼️ INVOICE TEMPLATE (off-screen) -->
 <div id="invoiceTemplate">
   <div style="background:linear-gradient(135deg,#14532d 0%,#166534 55%,#15803d 100%);color:white;padding:28px 32px;position:relative;overflow:hidden;">
     <div style="position:absolute;right:-50px;top:-50px;width:200px;height:200px;background:rgba(255,255,255,0.06);border-radius:50%;"></div>
@@ -508,7 +508,7 @@ tailwind.config = {
 
   <div style="background:#f0fdf4;border-bottom:2px solid #bbf7d0;padding:14px 32px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;">
     <div>
-      <div style="color:#78716c;font-size:9.5px;text-transform:uppercase;letter-spacing:1.5px;font-weight:700;">Order ID</div>
+      <div style="color:#78716c;font-size:9.5px;text-transform:uppercase;letter-spacing:1.5px;font-weight:700;">Voucher No.</div>
       <div style="font-family:'Sora',sans-serif;font-weight:800;color:#166534;font-size:15px;margin-top:2px;" id="invOrderId">SP-0000</div>
     </div>
     <div>
@@ -555,18 +555,17 @@ tailwind.config = {
 
 <script>
 /* ============ CONFIG ============ */
-const WHATSAPP_NUMBER = '8801971172307';           // international format for URLs
-const WHATSAPP_DISPLAY = '+8801971-172307';         // display format
-const WHATSAPP_TEL = '+8801971172307';              // tel: link format
+const WHATSAPP_NUMBER = '8801971172307';
+const WHATSAPP_DISPLAY = '+8801971-172307';
+const WHATSAPP_TEL = '+8801971172307';
 
-/* ============ 🎨 GENERATE LOGO AS BASE64 (for preview modal) ============ */
+/* ============ 🎨 GENERATE LOGO AS BASE64 (for preview modal only) ============ */
 let LOGO_BASE64 = '';
 (function generateLogo(){
   const size = 168;
   const c = document.createElement('canvas');
   c.width = size; c.height = size;
   const ctx = c.getContext('2d');
-
   const r = size * 0.27;
   function roundRect(x, y, w, h, radius){
     ctx.beginPath();
@@ -581,80 +580,149 @@ let LOGO_BASE64 = '';
     ctx.quadraticCurveTo(x, y, x + radius, y);
     ctx.closePath();
   }
-
   const grd = ctx.createLinearGradient(0, 0, size, size);
   grd.addColorStop(0, '#22c55e');
   grd.addColorStop(0.55, '#16a34a');
   grd.addColorStop(1, '#052e16');
   roundRect(0, 0, size, size, r);
-  ctx.fillStyle = grd;
-  ctx.fill();
-
+  ctx.fillStyle = grd; ctx.fill();
   ctx.strokeStyle = 'rgba(255,255,255,0.28)';
   ctx.lineWidth = size * 0.018;
   roundRect(size * 0.009, size * 0.009, size * 0.982, size * 0.982, r * 0.96);
   ctx.stroke();
-
   ctx.fillStyle = '#ffffff';
   ctx.font = `800 ${Math.round(size * 0.56)}px Arial, Helvetica, sans-serif`;
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
   ctx.fillText('S', size / 2, size / 2 + size * 0.03);
-
   LOGO_BASE64 = c.toDataURL('image/png');
 })();
 
-/* ============ 💬 SMART WHATSAPP ROUTING ============ */
-function isMobileDevice(){
-  const ua = navigator.userAgent || '';
-  if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(ua)) return true;
-  if(navigator.maxTouchPoints > 1 && /Macintosh/i.test(ua)) return true;
-  return false;
-}
-
+/* ============ 💬 WHATSAPP — api.whatsapp.com (mobile + desktop reliable) ============ */
 function openWhatsApp(message){
   const text = encodeURIComponent(message || 'আসসালামু আলাইকুম, আমি Shopner Ponno থেকে অর্ডার করতে চাই।');
-  let url;
-  if(isMobileDevice()){
-    url = `https://wa.me/${WHATSAPP_NUMBER}?text=${text}`;
-  } else {
-    url = `https://web.whatsapp.com/send?phone=${WHATSAPP_NUMBER}&text=${text}`;
+  const url = `https://api.whatsapp.com/send?phone=${WHATSAPP_NUMBER}&text=${text}`;
+
+  console.log('📤 WhatsApp URL length:', url.length);
+  console.log('📤 Message length:', (message || '').length);
+  console.log('📤 Message preview:', (message || '').substring(0, 300));
+
+  const win = window.open(url, '_blank');
+  if(!win){
+    console.log('⚠️ Popup blocked — using location.href fallback');
+    window.location.href = url;
   }
-  const win = window.open(url, '_blank', 'noopener,noreferrer');
-  if(!win) window.location.href = url;
 }
 
+/* ============ 📨 BUILD FULL WHATSAPP ORDER MESSAGE ============ */
+function buildOrderWhatsAppMessage(d){
+  let msg = '🌿 *নতুন অর্ডার — Shopner Ponno*\n';
+  msg += '━━━━━━━━━━━━━━━\n';
+  msg += `🆔 *ভাউচার নং:* ${d.orderId}\n`;
+  msg += `📅 *তারিখ:* ${d.orderDate}\n`;
+  msg += '━━━━━━━━━━━━━━━\n\n';
+
+  msg += '*🛒 প্রোডাক্ট তালিকা:*\n';
+  d.items.forEach((it, i) => {
+    msg += `${i + 1}. ${it.name}\n`;
+    msg += `   ৳${it.price} × ${it.qty} = *৳${it.price * it.qty}*\n`;
+  });
+
+  msg += '\n━━━━━━━━━━━━━━━\n';
+  msg += `সাবটোটাল: ৳${d.subtotal}\n`;
+  msg += `ডেলিভারি: ${d.delivery === 0 ? 'ফ্রি ✓' : '৳' + d.delivery}\n`;
+  msg += `*সর্বমোট: ৳${d.total}*\n`;
+  msg += '━━━━━━━━━━━━━━━\n\n';
+
+  msg += '*💳 পেমেন্ট তথ্য:*\n';
+  msg += `মেথড: *${d.payMethod}*\n`;
+  msg += `ভাউচার নং: *${d.orderId}*\n`;
+
+  if(d.paymentType === 'mobile'){
+    const cfg = PAY_CONFIG[d.payMethod];
+    msg += `মার্চেন্ট নম্বর: *${cfg ? cfg.numberDisplay : (d.merchantNumber || 'N/A')}*\n`;
+    msg += `Transaction ID: *${d.paymentRef || 'N/A'}*\n`;
+    msg += `পরিমাণ: *৳${d.total}*\n`;
+    msg += `⏳ _পেমেন্ট যাচাই পেন্ডিং_\n`;
+  } else if(d.paymentType === 'bank'){
+    const cfg = PAY_CONFIG[d.payMethod];
+    msg += `ব্যাংক: *${cfg.bank}*\n`;
+    msg += `অ্যাকাউন্ট নাম: *${cfg.accountName}*\n`;
+    msg += `অ্যাকাউন্ট নম্বর: *${cfg.accountNo}*\n`;
+    msg += `শাখা: *${cfg.branch}*\n`;
+    msg += `রাউটিং: *${cfg.routing}*\n`;
+    msg += `Transaction Reference: *${d.paymentRef || 'N/A'}*\n`;
+    msg += `পরিমাণ: *৳${d.total}*\n`;
+    msg += `⏳ _পেমেন্ট যাচাই পেন্ডিং_\n`;
+  } else {
+    msg += `পরিমাণ: *৳${d.total}*\n`;
+    msg += `_পণ্য হাতে পেয়ে টাকা পরিশোধ করবেন_\n`;
+  }
+
+  msg += '\n━━━━━━━━━━━━━━━\n';
+  msg += '*👤 কাস্টমার তথ্য:*\n';
+  msg += `নাম: *${d.name}*\n`;
+  msg += `ফোন: *${d.phone}*\n`;
+  msg += `ঠিকানা: *${d.address}*\n`;
+
+  msg += '\n━━━━━━━━━━━━━━━\n';
+  msg += '📎 PDF ভাউচার ডিভাইসে ডাউনলোড হয়েছে\n';
+  msg += '🙏 অর্ডারটি কনফার্ম করুন প্লিজ।';
+
+  return msg;
+}
+
+/* ============ 💬 DIRECT WHATSAPP ORDER BUTTON ============ */
 function orderViaWhatsApp(){
   if(!cart.length){
     showToast('⚠️ কার্ট খালি! প্রথমে প্রোডাক্ট যোগ করুন।', 'error');
     return;
   }
-  const totals = computeTotals();
   const name = (document.getElementById('custName')?.value || '').trim();
   const phone = (document.getElementById('custPhone')?.value || '').trim();
   const address = (document.getElementById('custAddress')?.value || '').trim();
   const payMethod = document.getElementById('payMethod')?.value || 'ক্যাশ অন ডেলিভারি';
+  const cfg = PAY_CONFIG[payMethod];
 
-  let msg = '🌿 *নতুন অর্ডার — Shopner Ponno*\n';
-  msg += '━━━━━━━━━━━━━━━\n\n';
-  msg += '*🛒 প্রোডাক্ট তালিকা:*\n';
-  cart.forEach((c, i) => {
-    const p = products.find(x => x.id === c.id);
-    msg += `${i + 1}. ${p.name}\n`;
-    msg += `   ৳${p.price} × ${c.qty} = *৳${p.price * c.qty}*\n`;
-  });
-  msg += '\n━━━━━━━━━━━━━━━\n';
-  msg += `সাবটোটাল: ৳${totals.subtotal}\n`;
-  msg += `ডেলিভারি: ${totals.delivery === 0 ? 'ফ্রি ✓' : '৳' + totals.delivery}\n`;
-  msg += `*সর্বমোট: ৳${totals.total}*\n`;
-  msg += '\n━━━━━━━━━━━━━━━\n';
-  msg += `💳 পেমেন্ট: ${payMethod}\n`;
-  if(name) msg += `👤 নাম: ${name}\n`;
-  if(phone) msg += `📱 ফোন: ${phone}\n`;
-  if(address) msg += `📍 ঠিকানা: ${address}\n`;
-  msg += '\nঅর্ডারটি কনফার্ম করুন প্লিজ। 🙏';
+  if(!name){ showToast('⚠️ নাম দিন', 'error'); document.getElementById('custName').focus(); return; }
+  if(!phone || phone.replace(/\D/g,'').length < 11){ showToast('⚠️ সঠিক ফোন নম্বর দিন', 'error'); document.getElementById('custPhone').focus(); return; }
+  if(!address){ showToast('⚠️ ঠিকানা দিন', 'error'); document.getElementById('custAddress').focus(); return; }
 
-  openWhatsApp(msg);
+  let paymentRef = '';
+  if(cfg){
+    const refInput = document.getElementById('paymentRef');
+    paymentRef = (refInput?.value || '').trim();
+    const label = cfg.type === 'mobile' ? 'Transaction ID' : 'Transaction Reference';
+    if(!paymentRef){
+      showToast(`⚠️ ${label} দিন`, 'error');
+      refInput?.focus();
+      refInput?.scrollIntoView({behavior:'smooth', block:'center'});
+      return;
+    }
+    if(paymentRef.length < 6){
+      showToast(`⚠️ সঠিক ${label} দিন (কমপক্ষে ৬ অক্ষর)`, 'error');
+      refInput?.focus();
+      return;
+    }
+  }
+
+  const totals = computeTotals();
+  const orderData = {
+    orderId: 'SP-' + Math.floor(1000 + Math.random()*9000),
+    orderDate: new Date().toLocaleString('en-GB', {dateStyle:'medium', timeStyle:'short'}),
+    name, phone, address,
+    payMethod: payMethod,
+    paymentType: cfg?.type || 'cod',
+    paymentRef: paymentRef,
+    merchantNumber: cfg?.type === 'mobile' ? cfg.numberRaw : '',
+    bankAccount: cfg?.type === 'bank' ? `${cfg.accountNo} (${cfg.bank})` : '',
+    items: cart.map(c => { const p = products.find(x => x.id === c.id); return {id:p.id, name:p.name, price:p.price, qty:c.qty}; }),
+    subtotal: totals.subtotal,
+    delivery: totals.delivery,
+    total: totals.total
+  };
+
+  openWhatsApp(buildOrderWhatsAppMessage(orderData));
 }
 
 /* ============ DATA ============ */
@@ -1159,6 +1227,11 @@ function checkout(){
 function showPreview(){
   if(!pendingOrder) return;
   const d = pendingOrder;
+
+  // ✅ Reset footer bar (if hidden from a previous order)
+  const footerBar = document.getElementById('previewFooterBar');
+  if(footerBar) footerBar.style.display = '';
+
   const dDelivery = d.delivery === 0 ? '<span class="text-brand-600 font-bold">ফ্রি</span>' : '৳' + d.delivery;
 
   const previewLogo = document.getElementById('previewLogoImg');
@@ -1168,6 +1241,7 @@ function showPreview(){
     <h4 class="text-[11px] font-bold text-stone-500 uppercase tracking-widest mb-2 flex items-center gap-1.5"><i class="fa-solid fa-shield-halved text-brand-600"></i> পেমেন্ট ভেরিফিকেশন</h4>
     <div class="bg-white border border-stone-200 rounded-2xl p-4 mb-5">
       <div class="flex justify-between items-center py-1.5"><span class="text-stone-500 text-[12.5px]">মেথড</span><span class="font-semibold text-stone-900 text-[13px]">${d.payMethod}</span></div>
+      <div class="flex justify-between items-center py-1.5 border-t border-stone-100"><span class="text-stone-500 text-[12.5px]">ভাউচার নম্বর</span><span class="font-semibold font-display text-brand-700 text-[13px]">${d.orderId}</span></div>
       ${d.paymentType === 'mobile' ? `
         <div class="flex justify-between items-center py-1.5 border-t border-stone-100"><span class="text-stone-500 text-[12.5px]">মার্চেন্ট নম্বর</span><span class="font-semibold font-display text-stone-900 text-[13px]">${d.merchantNumber}</span></div>
       ` : `
@@ -1193,7 +1267,7 @@ function showPreview(){
       </div>
       <div class="flex justify-between items-center">
         <div>
-          <p class="text-[10.5px] uppercase tracking-widest text-stone-500 font-bold">Order ID</p>
+          <p class="text-[10.5px] uppercase tracking-widest text-stone-500 font-bold">ভাউচার নম্বর</p>
           <p class="font-display font-extrabold text-brand-800 text-lg">${d.orderId}</p>
         </div>
         <div class="text-right">
@@ -1236,7 +1310,7 @@ function showPreview(){
       </div>
     </div>
 
-    <p class="text-[11px] text-stone-400 text-center mt-4 leading-relaxed">কনফার্ম করলে উপরের তথ্য অনুযায়ী PDF ভাউচার ডাউনলোড হবে</p>
+    <p class="text-[11px] text-stone-400 text-center mt-4 leading-relaxed">কনফার্ম করলে PDF ডাউনলোড হবে — তারপর WhatsApp বাটনে ক্লিক করে অর্ডার পাঠান</p>
   `;
   document.getElementById('previewModal').classList.replace('hidden','flex');
   document.body.style.overflow = 'hidden';
@@ -1262,16 +1336,22 @@ async function buildInvoiceTemplate(d){
   let payHTML = `<div style="font-size:9.5px;font-weight:800;color:#ea580c;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px;">Payment Details</div>`;
   payHTML += `<div style="font-size:11.5px;line-height:1.7;color:#1c1917;">`;
   if(d.paymentType === 'mobile'){
+    const cfg = PAY_CONFIG[d.payMethod];
+    payHTML += `<div>Voucher No: <b style="font-family:'Sora',sans-serif;color:#166534;">${d.orderId}</b></div>`;
     payHTML += `<div>Method: <b>${d.payMethod}</b></div>`;
-    payHTML += `<div>Merchant: <b style="font-family:'Sora',sans-serif;">${d.merchantNumber}</b></div>`;
-    payHTML += `<div>TrxID: <b style="font-family:monospace;letter-spacing:0.5px;">${d.paymentRef}</b></div>`;
+    payHTML += `<div>Merchant: <b style="font-family:'Sora',sans-serif;">${cfg ? cfg.numberDisplay : d.merchantNumber}</b></div>`;
+    payHTML += `<div>Transaction ID: <b style="font-family:monospace;letter-spacing:0.5px;color:#166534;">${d.paymentRef}</b></div>`;
     payHTML += `<div style="margin-top:4px;font-size:10px;color:#9a3412;">⏳ Payment verification pending</div>`;
   } else if(d.paymentType === 'bank'){
+    const cfg = PAY_CONFIG[d.payMethod];
+    payHTML += `<div>Voucher No: <b style="font-family:'Sora',sans-serif;color:#166534;">${d.orderId}</b></div>`;
     payHTML += `<div>Method: <b>${d.payMethod}</b></div>`;
-    payHTML += `<div style="font-size:10.5px;">Account: <b>${d.bankAccount}</b></div>`;
-    payHTML += `<div>Reference: <b style="font-family:monospace;letter-spacing:0.5px;">${d.paymentRef}</b></div>`;
+    payHTML += `<div style="font-size:10.5px;">Bank: <b>${cfg.bank}</b></div>`;
+    payHTML += `<div style="font-size:10.5px;">Account: <b>${cfg.accountNo}</b></div>`;
+    payHTML += `<div>Reference: <b style="font-family:monospace;letter-spacing:0.5px;color:#166534;">${d.paymentRef}</b></div>`;
     payHTML += `<div style="margin-top:4px;font-size:10px;color:#9a3412;">⏳ Payment verification pending</div>`;
   } else {
+    payHTML += `<div>Voucher No: <b style="font-family:'Sora',sans-serif;color:#166534;">${d.orderId}</b></div>`;
     payHTML += `<div>Method: <b>ক্যাশ অন ডেলিভারি</b></div>`;
     payHTML += `<div style="color:#57534e;font-size:11px;margin-top:2px;">পণ্য হাতে পেয়ে টাকা পরিশোধ করুন</div>`;
   }
@@ -1301,7 +1381,7 @@ async function buildInvoiceTemplate(d){
   `;
 }
 
-/* ============ CONFIRM → PDF ============ */
+/* ============ CONFIRM → PDF → Show WhatsApp Button (fresh user click) ============ */
 async function confirmOrder(){
   if(!pendingOrder) return;
   const btn = document.getElementById('confirmOrderBtn');
@@ -1320,18 +1400,13 @@ async function confirmOrder(){
 
     const template = document.getElementById('invoiceTemplate');
     const canvas = await html2canvas(template, {
-      scale: 2,
-      useCORS: true,
-      backgroundColor: '#ffffff',
-      logging: false,
-      windowWidth: 794,
-      windowHeight: template.scrollHeight
+      scale: 2, useCORS: true, backgroundColor: '#ffffff', logging: false,
+      windowWidth: 794, windowHeight: template.scrollHeight
     });
 
     const { jsPDF } = window.jspdf;
     const pdf = new jsPDF('p', 'mm', 'a4');
-    const pageW = 210, pageH = 297;
-    const imgW = 210;
+    const pageH = 297, imgW = 210;
     const imgH = canvas.height * (imgW / canvas.width);
 
     if(imgH <= pageH){
@@ -1352,26 +1427,131 @@ async function confirmOrder(){
       }
     }
 
-    pdf.save(`ShopnerPonno-Order-${d.orderId}.pdf`);
-    showToast('🎉 অর্ডার সফল! PDF ডাউনলোড হচ্ছে...', 'success');
+    // ✅ PDF ডাউনলোড
+    pdf.save(`ShopnerPonno-Voucher-${d.orderId}.pdf`);
 
-    cart = [];
-    updateCart();
-    document.getElementById('custName').value = '';
-    document.getElementById('custPhone').value = '';
-    document.getElementById('custAddress').value = '';
-    pendingOrder = null;
-    document.getElementById('previewModal').classList.replace('flex','hidden');
-    document.body.style.overflow = '';
-    document.getElementById('cartDrawer').classList.add('hidden');
+    // ✅ snapshot সংরক্ষণ
+    window._lastCompletedOrder = JSON.parse(JSON.stringify(d));
+    console.log('✅ Order snapshot saved:', {
+      orderId: d.orderId,
+      paymentRef: d.paymentRef,
+      payMethod: d.payMethod,
+      total: d.total,
+      itemCount: d.items.length
+    });
+
+    // ✅ Success UI with WhatsApp button (fresh click = guaranteed to work)
+    document.getElementById('previewBody').innerHTML = `
+      <div class="text-center py-8 md:py-10">
+        <div class="w-20 h-20 md:w-24 md:h-24 bg-brand-100 rounded-full mx-auto flex items-center justify-center mb-5">
+          <i class="fa-solid fa-circle-check text-4xl md:text-5xl text-brand-700"></i>
+        </div>
+        <h3 class="text-xl md:text-2xl font-display font-bold text-brand-800 mb-3">PDF ডাউনলোড সম্পন্ন!</h3>
+        <div class="flex flex-wrap justify-center gap-2 mb-4">
+          <div class="bg-brand-50 border border-brand-200 rounded-xl p-3 inline-block">
+            <p class="text-[10px] text-stone-500 uppercase tracking-wider font-bold">ভাউচার নং</p>
+            <p class="font-display font-extrabold text-brand-700 text-lg">${d.orderId}</p>
+          </div>
+          ${d.paymentRef ? `
+            <div class="bg-orange-50 border border-orange-200 rounded-xl p-3 inline-block">
+              <p class="text-[10px] text-stone-500 uppercase tracking-wider font-bold">Transaction ID</p>
+              <p class="font-display font-extrabold text-orange-700 text-sm font-mono">${d.paymentRef}</p>
+            </div>
+          ` : ''}
+        </div>
+        <p class="text-stone-600 text-sm mb-6 px-4">আপনার PDF ভাউচার ডাউনলোড হয়েছে।<br>এখন WhatsApp-এ অর্ডারটি পাঠিয়ে ফাইনাল করুন।</p>
+        <button onclick="sendOrderToWhatsApp()" class="btn w-full !py-4 text-base bg-[#25D366] hover:bg-[#1faa52] text-white shadow-lg">
+          <i class="fa-brands fa-whatsapp text-2xl"></i> WhatsApp-এ অর্ডার পাঠান
+        </button>
+        <p class="text-[10px] text-stone-400 mt-3">এতে অর্ডারটি আমাদের কাছে পৌঁছাবে</p>
+      </div>
+    `;
+
+    // Bottom action bar লুকাই
+    const bottomBar = document.getElementById('previewFooterBar');
+    if(bottomBar) bottomBar.style.display = 'none';
+
+    showToast('✅ PDF ডাউনলোড হয়েছে!', 'success');
+
+    btn.innerHTML = orig;
+    btn.disabled = false;
+
   } catch(err) {
     console.error('PDF error:', err);
     showToast('⚠️ PDF তৈরিতে সমস্যা হয়েছে, আবার চেষ্টা করুন।', 'error');
-  } finally {
     btn.innerHTML = orig;
     btn.disabled = false;
   }
 }
+
+/* ============ 📨 SEND ORDER TO WHATSAPP (after PDF downloaded) ============ */
+function sendOrderToWhatsApp(){
+  if(!window._lastCompletedOrder){
+    showToast('⚠️ অর্ডার তথ্য পাওয়া যায়নি', 'error');
+    return;
+  }
+  const d = window._lastCompletedOrder;
+
+  let msg;
+  try {
+    msg = buildOrderWhatsAppMessage(d);
+    console.log('📨 Built WhatsApp message:', msg.substring(0, 300));
+  } catch(e) {
+    console.error('Message build error:', e);
+    // Fallback — basic message with key info
+    msg = `🌿 নতুন অর্ডার — Shopner Ponno\n`;
+    msg += `ভাউচার: ${d.orderId || 'N/A'}\n`;
+    msg += `নাম: ${d.name || 'N/A'}\n`;
+    msg += `ফোন: ${d.phone || 'N/A'}\n`;
+    msg += `ঠিকানা: ${d.address || 'N/A'}\n`;
+    msg += `মোট: ৳${d.total || 0}\n`;
+    if(d.paymentRef) msg += `TrxID: ${d.paymentRef}\n`;
+  }
+
+  openWhatsApp(msg);
+
+  // Cleanup after user has been redirected
+  setTimeout(() => {
+    cart = [];
+    updateCart();
+    const nameEl = document.getElementById('custName');
+    const phoneEl = document.getElementById('custPhone');
+    const addrEl = document.getElementById('custAddress');
+    if(nameEl) nameEl.value = '';
+    if(phoneEl) phoneEl.value = '';
+    if(addrEl) addrEl.value = '';
+    pendingOrder = null;
+    window._lastCompletedOrder = null;
+    document.getElementById('previewModal').classList.replace('flex','hidden');
+    document.body.style.overflow = '';
+    document.getElementById('cartDrawer').classList.add('hidden');
+    // Restore bottom bar for next time
+    const bottomBar = document.getElementById('previewFooterBar');
+    if(bottomBar) bottomBar.style.display = '';
+  }, 1200);
+}
+
+/* ============ 🧪 DEBUG: Run testWhatsApp() in browser console ============ */
+window.testWhatsApp = function(){
+  const sampleOrder = {
+    orderId: 'SP-TEST',
+    orderDate: new Date().toLocaleString('en-GB'),
+    name: 'Test User',
+    phone: '01712345678',
+    address: 'Test Address, Dhaka',
+    payMethod: 'bKash',
+    paymentType: 'mobile',
+    paymentRef: 'TEST123456',
+    merchantNumber: '01971172307',
+    items: [{id:1, name:'সুন্দরবনের মধু', price:850, qty:2}],
+    subtotal: 1700,
+    delivery: 0,
+    total: 1700
+  };
+  const msg = buildOrderWhatsAppMessage(sampleOrder);
+  console.log('📋 Test message:\n', msg);
+  openWhatsApp(msg);
+};
 
 /* ============ DRAWER ============ */
 function openDrawer(id){ document.getElementById(id).classList.remove('hidden'); document.body.style.overflow = 'hidden'; if(id==='cartDrawer') renderPaymentPanel(); }
@@ -1392,7 +1572,7 @@ function showToast(msg, type='success'){
   t.innerHTML = msg;
   t.classList.remove('hidden');
   clearTimeout(t._timer);
-  t._timer = setTimeout(() => t.classList.add('hidden'), 2800);
+  t._timer = setTimeout(() => t.classList.add('hidden'), 3500);
 }
 
 /* ============ REVIEWS ============ */
