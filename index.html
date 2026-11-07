@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shopner Ponno - ১০০% অর্গানিক ও ফ্রেশ ফুড | Farm to Your Home</title>
+<meta name="description" content="Shopner Ponno - বাংলাদেশের সেরা অর্গানিক ফুড শপ। খাঁটি মধু, ঘি, অর্গানিক চাল, মসলা, সারা বাংলাদেশে ক্যাশ অন ডেলিভারি।">
+<meta name="keywords" content="organic food bangladesh, shopner ponno, খাঁটি মধু, অর্গানিক চাল">
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+<script>
+tailwind.config={theme:{extend:{colors:{brand:'#15803d',brand2:'#f97316',dark:'#0f2a1a'},fontFamily:{bn:['Hind Siliguri','sans-serif'],en:['Poppins','sans-serif']}}}}
+</script>
+<style>
+*{font-family:'Hind Siliguri',sans-serif} .no-scrollbar::-webkit-scrollbar{display:none}
+.parallax{background-attachment:fixed;background-size:cover;background-position:center}
+.reveal{opacity:0;transform:translateY(35px);transition:.7s} .reveal.active{opacity:1;transform:none}
+.hero-slide{transition:opacity 1s,transform 1.2s} .hero-slide.active{opacity:1!important;transform:scale(1)!important}
+.marquee{animation:marquee 22s linear infinite} @keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.float{animation:float 4s ease-in-out infinite} @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+.zoom-card img{transition:.6s} .zoom-card:hover img{transform:scale(1.1)}
+.glass{background:rgba(255,255,255,.92);backdrop-filter:blur(12px)}
+.star{color:#f59e0b}
+.review-track{transition:transform .7s cubic-bezier(.4,0,.2,1)}
+.drawer{transition:.45s}
+</style>
+</head>
+<body class="bg-[#f6fdf7] text-slate-800 overflow-x-hidden">
+
+<!-- TOP BAR -->
+<div class="bg-[#0f2a1a] text-white text-[13px] py-2 overflow-hidden"><div class="flex whitespace-nowrap marquee gap-8 w-max"><span>🚚 সারা বাংলাদেশে ক্যাশ অন ডেলিভারি</span><span>🍯 ১০০% খাঁটি - ভেজাল প্রমাণে টাকা ফেরত</span><span>📞 অর্ডার: 01700-000000</span><span>🎉 ১০০০৳+ অর্ডারে ডেলিভারি ফ্রি</span><span>🚚 সারা বাংলাদেশে ক্যাশ অন ডেলিভারি</span><span>🍯 ১০০% খাঁটি - ভেজাল প্রমাণে টাকা ফেরত</span></div></div>
+
+<!-- HEADER -->
+<header class="sticky top-0 z-50 glass shadow-sm">
+<div class="max-w-7xl mx-auto px-4 flex items-center justify-between h-[72px]">
+<div class="flex items-center gap-3">
+<button onclick="toggleMenu()" class="lg:hidden text-2xl"><i class="fa-solid fa-bars"></i></button>
+<a href="#" class="flex items-center gap-2"><div class="w-11 h-11 bg-green-700 rounded-2xl flex items-center justify-center text-white text-2xl font-bold shadow-lg rotate-3">S</div><div><h1 class="font-en font-extrabold text-[22px] leading-none">Shopner <span class="text-orange-500">Ponno</span></h1><p class="text-[11px] tracking-[2px] text-green-700 font-semibold">YOUR DREAM SHOP</p></div></a>
+</div>
+<nav class="hidden lg:flex gap-7 font-semibold text-[15px]"><a href="#home" class="hover:text-green-700">হোম</a><a href="#products" class="hover:text-green-700">প্রোডাক্ট</a><a href="#about" class="hover:text-green-700">আমাদের গল্প</a><a href="#reviews" class="hover:text-green-700">রিভিউ</a><a href="#upcoming" class="hover:text-green-700">আপকামিং</a><a href="#contact" class="hover:text-green-700">যোগাযোগ</a></nav>
+<div class="flex items-center gap-2">
+<div class="hidden md:flex items-center bg-white border rounded-full px-3 py-1.5 w-[230px]"><i class="fa-solid fa-magnifying-glass text-slate-400"></i><input id="searchInput" oninput="filterProducts()" placeholder="মধু, ঘি, চাল খুঁজুন..." class="outline-none text-sm px-2 w-full"></div>
+<button onclick="openDrawer('wishlistDrawer')" class="relative w-10 h-10 rounded-full bg-green-50 flex items-center justify-center"><i class="fa-regular fa-heart text-green-700"></i><span id="wishCount" class="absolute -top-1 -right-1 bg-red-500 text-white text-[11px] w-5 h-5 rounded-full flex items-center justify-center">0</span></button>
+<button onclick="openDrawer('cartDrawer')" class="relative w-10 h-10 rounded-full bg-green-700 text-white flex items-center justify-center"><i class="fa-solid fa-cart-shopping"></i><span id="cartCount" class="absolute -top-1 -right-1 bg-orange-500 text-white text-[11px] w-5 h-5 rounded-full flex items-center justify-center">0</span></button>
+</div></div>
+<!-- Mobile Menu -->
+<div id="mobileMenu" class="hidden lg:hidden border-t bg-white px-4 py-3 flex flex-col gap-2 font-semibold"><a href="#home">হোম</a><a href="#products">প্রোডাক্ট</a><a href="#about">আমাদের গল্প</a><a href="#reviews">রিভিউ</a><a href="#upcoming">আপকামিং</a></div>
+</header>
+
+<!-- HERO SLIDER - Unique Diagonal Style -->
+<section id="home" class="relative overflow-hidden">
+<div id="heroSlides" class="relative h-[560px] md:h-[620px]"></div>
+<div class="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2 z-20" id="heroDots"></div>
+<div class="absolute top-1/2 left-3 z-20"><button onclick="heroPrev()" class="w-11 h-11 bg-white/90 rounded-full shadow"><i class="fa-solid fa-chevron-left"></i></button></div>
+<div class="absolute top-1/2 right-3 z-20"><button onclick="heroNext()" class="w-11 h-11 bg-white/90 rounded-full shadow"><i class="fa-solid fa-chevron-right"></i></button></div>
+</section>
+
+<!-- TRUST BADGES -->
+<section class="max-w-7xl mx-auto px-4 -mt-8 relative z-30"><div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+<div class="bg-white rounded-2xl shadow-lg p-4 flex gap-3 items-center reveal"><i class="fa-solid fa-truck-fast text-2xl text-green-700"></i><div><b>ফাস্ট ডেলিভারি</b><p class="text-xs text-slate-500">ঢাকায় ২৪ ঘণ্টায়</p></div></div>
+<div class="bg-white rounded-2xl shadow-lg p-4 flex gap-3 items-center reveal"><i class="fa-solid fa-leaf text-2xl text-green-700"></i><div><b>১০০% অর্গানিক</b><p class="text-xs text-slate-500">সরাসরি খামার থেকে</p></div></div>
+<div class="bg-white rounded-2xl shadow-lg p-4 flex gap-3 items-center reveal"><i class="fa-solid fa-money-bill-wave text-2xl text-green-700"></i><div><b>ক্যাশ অন ডেলিভারি</b><p class="text-xs text-slate-500">আগে দেখে তারপর টাকা</p></div></div>
+<div class="bg-white rounded-2xl shadow-lg p-4 flex gap-3 items-center reveal"><i class="fa-solid fa-shield-halved text-2xl text-green-700"></i><div><b>টাকা ফেরত গ্যারান্টি</b><p class="text-xs text-slate-500">ভেজাল প্রমাণে ১০০%</p></div></div>
+</div></section>
+
+<!-- CATEGORY FILTER -->
+<section class="max-w-7xl mx-auto px-4 mt-10"><div class="flex gap-2 overflow-x-auto no-scrollbar pb-2" id="cats">
+<button onclick="setCat('all',this)" class="cat-btn bg-green-700 text-white px-5 py-2 rounded-full whitespace-nowrap font-semibold">সবগুলো</button>
+<button onclick="setCat('মধু',this)" class="cat-btn bg-white px-5 py-2 rounded-full whitespace-nowrap font-semibold border">🍯 মধু</button>
+<button onclick="setCat('ঘি',this)" class="cat-btn bg-white px-5 py-2 rounded-full whitespace-nowrap font-semibold border">🧈 ঘি ও তেল</button>
+<button onclick="setCat('চাল',this)" class="cat-btn bg-white px-5 py-2 rounded-full whitespace-nowrap font-semibold border">🍚 চাল</button>
+<button onclick="setCat('মসলা',this)" class="cat-btn bg-white px-5 py-2 rounded-full whitespace-nowrap font-semibold border">🌶️ মসলা</button>
+<button onclick="setCat('ড্রাই',this)" class="cat-btn bg-white px-5 py-2 rounded-full whitespace-nowrap font-semibold border">🥜 ড্রাই ফ্রুটস</button>
+<button onclick="setCat('ফ্রেশ',this)" class="cat-btn bg-white px-5 py-2 rounded-full whitespace-nowrap font-semibold border">🥦 ফ্রেশ</button>
+</div></section>
+
+<!-- PRODUCTS -->
+<section id="products" class="max-w-7xl mx-auto px-4 py-8">
+<div class="flex justify-between items-end mb-5"><div><p class="text-green-700 font-bold tracking-widest text-sm">FARM FRESH COLLECTION</p><h2 class="text-3xl md:text-4xl font-bold">বেস্ট সেলার প্রোডাক্ট <span class="text-green-700">২০টি</span></h2></div><p class="hidden md:block text-slate-500">⭐ ৪.৯ রেটিং • ২,৪০০+ খুশি কাস্টমার</p></div>
+<div id="productGrid" class="grid grid-cols-2 lg:grid-cols-4 gap-4"></div>
+</section>
+
+<!-- PARALLAX ABOUT -->
+<section id="about" class="parallax relative py-20 my-10" style="background-image:url('https://images.unsplash.com/photo-1500937386664-56d1dfef3854?w=1600&q=80')">
+<div class="absolute inset-0 bg-black/60"></div>
+<div class="relative max-w-7xl mx-auto px-4 grid md:grid-cols-2 gap-10 items-center text-white">
+<div class="reveal"><h2 class="text-4xl font-bold leading-tight">খামার থেকে সরাসরি<br><span class="text-green-400">আপনার টেবিলে</span></h2><p class="mt-4 text-white/80 leading-relaxed">আমরা খুলনা, যশোর আর সাতক্ষীরার ৪৫+ কৃষকের সাথে সরাসরি কাজ করি। কোনো মধ্যস্বত্বভোগী নেই, কোনো ভেজাল নেই। প্রতিটি প্রোডাক্ট ল্যাব টেস্ট করা।</p><div class="grid grid-cols-3 gap-4 mt-6 text-center"><div class="bg-white/10 rounded-2xl p-4"><b class="text-2xl">45+</b><p class="text-xs">কৃষক পার্টনার</p></div><div class="bg-white/10 rounded-2xl p-4"><b class="text-2xl">2400+</b><p class="text-xs">হ্যাপি কাস্টমার</p></div><div class="bg-white/10 rounded-2xl p-4"><b class="text-2xl">64</b><p class="text-xs">জেলায় ডেলিভারি</p></div></div></div>
+<div class="reveal"><img src="https://images.unsplash.com/photo-1466637574441-749b8f19452f?w=900&q=80" class="rounded-[28px] shadow-2xl rotate-2 border-4 border-white/20"></div>
+</div></section>
+
+<!-- UPCOMING -->
+<section id="upcoming" class="max-w-7xl mx-auto px-4 py-6"><h2 class="text-3xl font-bold mb-5">🔥 আপকামিং প্রোডাক্ট <span class="text-sm bg-orange-100 text-orange-600 px-3 py-1 rounded-full">শীঘ্রই আসছে</span></h2><div class="grid md:grid-cols-4 gap-4">
+<div class="bg-white rounded-3xl overflow-hidden shadow reveal"><img src="https://images.unsplash.com/photo-1610725664285-7c57e6eeac3f?w=600&q=80" class="h-44 w-full object-cover"><div class="p-4"><b>কালোজিরা তেল</b><p class="text-sm text-slate-500">আসছে ১৫ নভেম্বর</p><button onclick="notifyMe(this)" class="mt-2 w-full bg-orange-500 text-white py-2 rounded-full font-semibold">🔔 Notify Me</button></div></div>
+<div class="bg-white rounded-3xl overflow-hidden shadow reveal"><img src="https://images.unsplash.com/photo-1587049352846-4a222e784d38?w=600&q=80" class="h-44 w-full object-cover"><div class="p-4"><b>সুন্দরবনের খাঁটি মধু</b><p class="text-sm text-slate-500">আসছে ২০ নভেম্বর</p><button onclick="notifyMe(this)" class="mt-2 w-full bg-orange-500 text-white py-2 rounded-full font-semibold">🔔 Notify Me</button></div></div>
+<div class="bg-white rounded-3xl overflow-hidden shadow reveal"><img src="https://images.unsplash.com/photo-1596591606975-97ee5cef3a1e?w=600&q=80" class="h-44 w-full object-cover"><div class="p-4"><b>অর্গানিক গুড়</b><p class="text-sm text-slate-500">আসছে ২৫ নভেম্বর</p><button onclick="notifyMe(this)" class="mt-2 w-full bg-orange-500 text-white py-2 rounded-full font-semibold">🔔 Notify Me</button></div></div>
+<div class="bg-white rounded-3xl overflow-hidden shadow reveal"><img src="https://images.unsplash.com/photo-1615485290382-441e4d049cb5?w=600&q=80" class="h-44 w-full object-cover"><div class="p-4"><b>দেশি মুরগির ডিম</b><p class="text-sm text-slate-500">আসছে ১ ডিসেম্বর</p><button onclick="notifyMe(this)" class="mt-2 w-full bg-orange-500 text-white py-2 rounded-full font-semibold">🔔 Notify Me</button></div></div>
+</div></section>
+
+<!-- REVIEWS SLIDER - Unique Card Stack -->
+<section id="reviews" class="max-w-7xl mx-auto px-4 py-12"><h2 class="text-3xl font-bold text-center">কাস্টমাররা কি বলছে?</h2><p class="text-center text-slate-500 mb-6">৪.৯/৫ • ১,২০০+ ভেরিফাইড রিভিউ</p>
+<div class="relative overflow-hidden max-w-4xl mx-auto"><div id="reviewTrack" class="flex review-track"></div>
+<div class="flex justify-center gap-3 mt-6"><button onclick="reviewPrev()" class="w-11 h-11 bg-white shadow rounded-full"><i class="fa-solid fa-arrow-left"></i></button><button onclick="reviewNext()" class="w-11 h-11 bg-green-700 text-white shadow rounded-full"><i class="fa-solid fa-arrow-right"></i></button></div></div></section>
+
+<!-- COMMENTS -->
+<section class="max-w-3xl mx-auto px-4 pb-10"><div class="bg-white rounded-3xl shadow p-6"><h3 class="font-bold text-xl mb-4"><i class="fa-regular fa-comments text-green-700"></i> আপনার মতামত দিন</h3><input id="cName" placeholder="আপনার নাম" class="w-full border rounded-xl px-4 py-2.5 mb-2"><textarea id="cText" placeholder="প্রোডাক্ট কেমন লাগলো?" class="w-full border rounded-xl px-4 py-2.5"></textarea><button onclick="addComment()" class="mt-3 bg-green-700 text-white px-6 py-2.5 rounded-full font-semibold">কমেন্ট পোস্ট করুন</button><div id="commentList" class="mt-5 space-y-3"></div></div></section>
+
+<!-- PAYMENT -->
+<section class="max-w-7xl mx-auto px-4 pb-12"><div class="bg-white rounded-3xl shadow p-6"><h3 class="font-bold text-xl mb-4">💳 পেমেন্ট অপশন</h3><div class="grid grid-cols-3 md:grid-cols-6 gap-3 text-center font-bold"><div class="border rounded-2xl py-4 hover:shadow-lg transition"><i class="fa-solid fa-money-bill-wave text-2xl text-green-600"></i><p class="text-sm mt-1">ক্যাশ অন ডেলিভারি</p></div><div class="border rounded-2xl py-4 hover:shadow-lg transition"><p class="text-pink-600 text-xl">bKash</p><p class="text-xs text-slate-500">01700-000000</p></div><div class="border rounded-2xl py-4 hover:shadow-lg transition"><p class="text-orange-500 text-xl">Nagad</p><p class="text-xs text-slate-500">01700-000000</p></div><div class="border rounded-2xl py-4 hover:shadow-lg transition"><p class="text-[#e2136e] text-xl">Rocket</p><p class="text-xs text-slate-500">01700-000000</p></div><div class="border rounded-2xl py-4 hover:shadow-lg transition"><p class="text-blue-600 text-xl">Upay</p><p class="text-xs text-slate-500">01700-000000</p></div><div class="border rounded-2xl py-4 hover:shadow-lg transition"><i class="fa-solid fa-building-columns text-2xl text-slate-700"></i><p class="text-sm mt-1">ব্যাংক ট্রান্সফার</p></div></div></div></section>
+
+<!-- FOOTER -->
+<footer id="contact" class="bg-[#0f2a1a] text-white py-10"><div class="max-w-7xl mx-auto px-4 grid md:grid-cols-3 gap-8"><div><h3 class="font-en font-bold text-2xl">Shopner <span class="text-orange-400">Ponno</span></h3><p class="text-white/60 text-sm mt-2">খুলনা, বাংলাদেশ • সকাল ৯টা - রাত ১০টা</p><p class="mt-2">📞 01700-000000<br>📧 hello@shopnerponno.com</p></div><div><b>দ্রুত লিংক</b><p class="text-white/60 text-sm mt-2 leading-7">হোম • প্রোডাক্ট • ট্র্যাক অর্ডার<br>রিটার্ন পলিসি • প্রাইভেসি পলিসি</p></div><div><b>WhatsApp অর্ডার</b><a href="https://wa.me/8801700000000" target="_blank" class="block mt-2 bg-green-500 text-center py-3 rounded-full font-bold"><i class="fa-brands fa-whatsapp"></i> WhatsApp এ অর্ডার করুন</a></div></div><p class="text-center text-white/40 text-xs mt-8">© 2026 Shopner Ponno. All Rights Reserved.</p></footer>
+
+<!-- PRODUCT MODAL -->
+<div id="productModal" class="fixed inset-0 bg-black/60 z-[80] hidden items-center justify-center p-4"><div class="bg-white rounded-[28px] max-w-4xl w-full max-h-[92vh] overflow-y-auto relative"><button onclick="closeModal()" class="absolute top-4 right-4 z-10 w-9 h-9 bg-white shadow rounded-full">✕</button><div id="modalContent"></div></div></div>
+
+<!-- CART DRAWER -->
+<div id="cartDrawer" class="fixed inset-0 z-[90] hidden"><div class="absolute inset-0 bg-black/50" onclick="closeDrawer('cartDrawer')"></div><div class="absolute right-0 top-0 h-full w-full max-w-[420px] bg-white p-5 overflow-y-auto drawer"><div class="flex justify-between items-center"><h3 class="font-bold text-xl">🛒 আপনার কার্ট</h3><button onclick="closeDrawer('cartDrawer')">✕</button></div><div id="cartItems" class="mt-4 space-y-3"></div><div class="mt-5 border-t pt-4"><div class="flex justify-between font-bold"><span>সাবটোটাল</span><span id="cartTotal">০৳</span></div><p class="text-xs text-slate-500 mt-1">ডেলিভারি: ঢাকায় ৬০৳, ঢাকার বাইরে ১২০৳ • ১০০০৳+ ফ্রি</p><select id="payMethod" class="w-full border rounded-xl px-3 py-2.5 mt-3"><option>ক্যাশ অন ডেলিভারি (COD)</option><option>bKash</option><option>Nagad</option><option>Rocket</option><option>Upay</option><option>ব্যাংক ট্রান্সফার</option></select><input placeholder="নাম" class="w-full border rounded-xl px-3 py-2.5 mt-2"><input placeholder="ঠিকানা" class="w-full border rounded-xl px-3 py-2.5 mt-2"><input placeholder="ফোন নম্বর" class="w-full border rounded-xl px-3 py-2.5 mt-2"><button onclick="checkout()" class="w-full bg-green-700 text-white py-3.5 rounded-full font-bold mt-3 text-lg">✅ অর্ডার কনফার্ম করুন</button><a href="https://wa.me/8801700000000" target="_blank" class="block text-center mt-2 bg-[#25D366] text-white py-3 rounded-full font-bold">WhatsApp এ অর্ডার করুন</a></div></div></div>
+
+<!-- WISHLIST DRAWER -->
+<div id="wishlistDrawer" class="fixed inset-0 z-[90] hidden"><div class="absolute inset-0 bg-black/50" onclick="closeDrawer('wishlistDrawer')"></div><div class="absolute right-0 top-0 h-full w-full max-w-[420px] bg-white p-5 overflow-y-auto"><div class="flex justify-between"><h3 class="font-bold text-xl">❤️ উইশলিস্ট</h3><button onclick="closeDrawer('wishlistDrawer')">✕</button></div><div id="wishItems" class="mt-4 space-y-3"></div></div></div>
+
+<div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-slate-900 text-white px-5 py-3 rounded-full z-[100] hidden shadow-2xl text-sm"></div>
+
+<script>
+const products=[
+{id:1,name:"সুন্দরবনের খাঁটি মধু - ১ কেজি",cat:"মধু",price:850,old:1050,rating:4.9,reviews:342,img:"https://images.unsplash.com/photo-1587049352846-4a222e784d38?w=700&q=80",desc:"সুন্দরবন থেকে সংগ্রহ করা ১০০% খাঁটি মধু। কোনো চিনি মেশানো নেই।",badge:"BEST SELLER"},
+{id:2,name:"খাঁটি গাওয়া ঘি - ৫০০ গ্রাম",cat:"ঘি",price:750,old:900,rating:4.9,reviews:289,img:"https://images.unsplash.com/photo-1631452180519-c014fe946bc7?w=700&q=80",desc:"দেশি গরুর দুধ থেকে তৈরি, দানাদার খাঁটি ঘি।",badge:"PREMIUM"},
+{id:3,name:"অর্গানিক লাল চাল - ৫ কেজি",cat:"চাল",price:650,old:750,rating:4.8,reviews:198,img:"https://images.unsplash.com/photo-1586201375761-83865001e31c?w=700&q=80",desc:"কীটনাশক মুক্ত লাল চাল, ডায়াবেটিস রোগীদের জন্য ভালো।",badge:""},
+{id:4,name:"হলুদের গুঁড়া - ৫০০ গ্রাম",cat:"মসলা",price:280,old:340,rating:4.8,reviews:156,img:"https://images.unsplash.com/photo-1615485500834-bc10199bc727?w=700&q=80",desc:"খুলনার বিখ্যাত কাঁচা হলুদ শুকিয়ে গুঁড়া করা।",badge:""},
+{id:5,name:"মরিচের গুঁড়া - ৫০০ গ্রাম",cat:"মসলা",price:320,old:380,rating:4.7,reviews:145,img:"https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=700&q=80",desc:"ঝাল ও রং দুটোই সেরা।",badge:""},
+{id:6,name:"সরিষার তেল - ১ লিটার",cat:"ঘি",price:380,old:450,rating:4.9,reviews:412,img:"https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?w=700&q=80",desc:"কাঠের ঘানিতে ভাঙা খাঁটি সরিষার তেল।",badge:"BEST SELLER"},
+{id:7,name:"কাজু বাদাম - ৫০০ গ্রাম",cat:"ড্রাই",price:680,old:800,rating:4.8,reviews:120,img:"https://images.unsplash.com/photo-1508061253366-f7da158b6d46?w=700&q=80",desc:"প্রিমিয়াম সাইজের কাজু, রোস্টেড।",badge:""},
+{id:8,name:"খেজুর - আজওয়া ৫০০ গ্রাম",cat:"ড্রাই",price:950,old:1150,rating:4.9,reviews:210,img:"https://images.unsplash.com/photo-1593904308074-e1a8f56f2a02?w=700&q=80",desc:"মদিনার অরিজিনাল আজওয়া খেজুর।",badge:"PREMIUM"},
+{id:9,name:"চিয়া সিড - ৫০০ গ্রাম",cat:"ড্রাই",price:550,old:650,rating:4.7,reviews:98,img:"https://images.unsplash.com/photo-1515543904379-3d757afe72e4?w=700&q=80",desc:"ওজন কমাতে ও এনার্জির জন্য সেরা।",badge:""},
+{id:10,name:"অর্গানিক বাসমতী চাল - ২ কেজি",cat:"চাল",price:520,old:620,rating:4.8,reviews:87,img:"https://images.unsplash.com/photo-1567337710282-00832b415979?w=700&q=80",desc:"সুগন্ধি লম্বা দানার বাসমতী।",badge:""},
+{id:11,name:"কালোজিরা - ২৫০ গ্রাম",cat:"মসলা",price:220,old:280,rating:4.8,reviews:134,img:"https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=700&q=80",desc:"মৃত্যু ছাড়া সব রোগের ঔষধ।",badge:""},
+{id:12,name:"খাঁটি নারকেল তেল - ৫০০ মিলি",cat:"ঘি",price:420,old:500,rating:4.9,reviews:267,img:"https://images.unsplash.com/photo-1601049676869-702ea24cfd58?w=700&q=80",desc:"কোল্ড প্রেসড নারকেল তেল, চুল ও রান্নার জন্য।",badge:""},
+{id:13,name:"মিক্সড ড্রাই ফ্রুটস - ১ কেজি",cat:"ড্রাই",price:1250,old:1500,rating:4.9,reviews:178,img:"https://images.unsplash.com/photo-1596591606975-97ee5cef3a1e?w=700&q=80",desc:"বাদাম, কিসমিস, খেজুর, কাজু মিক্স।",badge:"COMBO"},
+{id:14,name:"দেশি মসুর ডাল - ১ কেজি",cat:"ফ্রেশ",price:180,old:220,rating:4.7,reviews:201,img:"https://images.unsplash.com/photo-1585996489349-5a4a2b2e0b8c?w=700&q=80",desc:"দেশি জাতের মসুর ডাল, দ্রুত সিদ্ধ হয়।",badge:""},
+{id:15,name:"জিরা গুঁড়া - ২৫০ গ্রাম",cat:"মসলা",price:260,old:310,rating:4.8,reviews:112,img:"https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=700&q=80",desc:"টাটকা জিরা ভেজে গুঁড়া করা।",badge:""},
+{id:16,name:"আখের গুড় - ১ কেজি",cat:"ফ্রেশ",price:290,old:350,rating:4.9,reviews:189,img:"https://images.unsplash.com/photo-1589367920969-ab8e050bbb04?w=700&q=80",desc:"খেজুরের গুড়ের মতো মিষ্টি আখের গুড়।",badge:""},
+{id:17,name:"পিনাট বাটার - ৪০০ গ্রাম",cat:"ড্রাই",price:450,old:540,rating:4.7,reviews:76,img:"https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=700&q=80",desc:"চিনি ছাড়া, ১০০% বাদাম দিয়ে তৈরি।",badge:""},
+{id:18,name:"গ্রিন টি - ২০০ গ্রাম",cat:"ফ্রেশ",price:380,old:450,rating:4.8,reviews:145,img:"https://images.unsplash.com/photo-1561336313-0bd5e0b27ec8?w=700&q=80",desc:"সিলেটের বাগানের ফ্রেশ গ্রিন টি।",badge:""},
+{id:19,name:"কাঠ বাদাম - ৫০০ গ্রাম",cat:"ড্রাই",price:720,old:850,rating:4.9,reviews:156,img:"https://images.unsplash.com/photo-1508061253366-f7da158b6d46?w=700&q=80",desc:"বড় দানার ক্যালিফোর্নিয়া কাঠ বাদাম।",badge:""},
+{id:20,name:"অর্গানিক ভেজিটেবল কম্বো - ৫ কেজি",cat:"ফ্রেশ",price:890,old:1100,rating:5.0,reviews:321,img:"https://images.unsplash.com/photo-1540420773420-3366772f4999?w=700&q=80",desc:"সপ্তাহের সব টাটকা সবজি এক বক্সে।",badge:"COMBO"},
+];
+let cart=[], wishlist=[], currentCat='all', heroIdx=0, reviewIdx=0;
+const heroes=[
+{title:"১০০% অর্গানিক<br>ফ্রেশ ফুড",sub:"খামার থেকে সরাসরি আপনার বাসায়",img:"https://images.unsplash.com/photo-1542838132-92c53300491e?w=1600&q=80",cta:"এখনই অর্ডার করুন"},
+{title:"সুন্দরবনের খাঁটি মধু",sub:"ভেজাল প্রমাণে ১০০% টাকা ফেরত",img:"https://images.unsplash.com/photo-1587049352846-4a222e784d38?w=1600&q=80",cta:"মধু কিনুন"},
+{title:"সারা বাংলাদেশে<br>ডেলিভারি",sub:"ঢাকায় ২৪ ঘণ্টা, ঢাকার বাইরে ৪৮ ঘণ্টা",img:"https://images.unsplash.com/photo-1500937386664-56d1dfef3854?w=1600&q=80",cta:"প্রোডাক্ট দেখুন"},
+];
+function renderHero(){document.getElementById('heroSlides').innerHTML=heroes.map((h,i)=>`<div class="hero-slide absolute inset-0 opacity-0 scale-105 ${i===0?'active':''}"><img src="${h.img}" class="w-full h-full object-cover"><div class="absolute inset-0 bg-gradient-to-r from-black/70 via-black/30 to-transparent"></div><div class="absolute inset-0 flex items-center"><div class="max-w-7xl mx-auto px-4 w-full text-white"><span class="bg-green-600 px-3 py-1 rounded-full text-xs font-bold">🌿 100% ORGANIC</span><h1 class="text-[42px] md:text-[64px] font-extrabold leading-[1.05] mt-4">${h.title}</h1><p class="text-lg md:text-xl text-white/80 mt-3">${h.sub}</p><div class="flex gap-3 mt-6"><a href="#products" class="bg-green-600 px-7 py-3.5 rounded-full font-bold text-lg shadow-xl hover:scale-105 transition">${h.cta} →</a><a href="#about" class="bg-white text-slate-900 px-7 py-3.5 rounded-full font-bold">আমাদের গল্প</a></div></div></div></div>`).join('');document.getElementById('heroDots').innerHTML=heroes.map((_,i)=>`<button onclick="goHero(${i})" class="w-3 h-3 rounded-full ${i===heroIdx?'bg-green-600 w-8':''} bg-white/80 transition-all"></button>`).join('');}
+function goHero(i){heroIdx=i;document.querySelectorAll('.hero-slide').forEach((s,idx)=>{s.classList.toggle('active',idx===i);s.style.opacity=idx===i?'1':'0'});renderHeroDots();}
+function renderHeroDots(){document.getElementById('heroDots').innerHTML=heroes.map((_,i)=>`<button onclick="goHero(${i})" class="h-3 rounded-full transition-all ${i===heroIdx?'bg-green-600 w-8':'bg-white/80 w-3'}"></button>`).join('');}
+function heroNext(){heroIdx=(heroIdx+1)%heroes.length;goHero(heroIdx)} function heroPrev(){heroIdx=(heroIdx-1+heroes.length)%heroes.length;goHero(heroIdx)}
+setInterval(heroNext,5000);
+
+function stars(r){return `<span class="star">${'★'.repeat(Math.round(r))}</span> <span class="text-xs text-slate-500">${r} (${Math.floor(Math.random()*300+50)})</span>`}
+function renderProducts(){let list=products.filter(p=>(currentCat==='all'||p.cat===currentCat)&&(p.name.toLowerCase().includes((document.getElementById('searchInput')?.value||'').toLowerCase())));document.getElementById('productGrid').innerHTML=list.map(p=>`<div class="bg-white rounded-3xl overflow-hidden shadow hover:shadow-2xl hover:-translate-y-1.5 transition-all zoom-card reveal active group">
+<div class="relative cursor-pointer" onclick="openProduct(${p.id})"><img src="${p.img}" class="w-full h-[180px] md:h-[210px] object-cover"><span class="absolute top-2 left-2 bg-red-500 text-white text-[11px] px-2 py-1 rounded-full font-bold">-${Math.round((1-p.price/p.old)*100)}%</span>${p.badge?`<span class="absolute top-2 right-2 bg-green-700 text-white text-[11px] px-2 py-1 rounded-full">${p.badge}</span>`:''}<button onclick="event.stopPropagation();toggleWish(${p.id},this)" class="absolute bottom-2 right-2 w-9 h-9 bg-white rounded-full shadow flex items-center justify-center ${wishlist.includes(p.id)?'text-red-500':'text-slate-400'}"><i class="${wishlist.includes(p.id)?'fa-solid':'fa-regular'} fa-heart"></i></button></div>
+<div class="p-3 md:p-4"><p class="text-[11px] text-green-700 font-bold">${p.cat}</p><h3 class="font-bold leading-snug cursor-pointer hover:text-green-700" onclick="openProduct(${p.id})">${p.name}</h3><div class="text-sm mt-1">${stars(p.rating)}</div><div class="flex items-center gap-2 mt-2"><b class="text-lg text-green-700">${p.price}৳</b><s class="text-slate-400 text-sm">${p.old}৳</s></div><div class="flex gap-2 mt-3"><button onclick="addToCart(${p.id})" class="flex-1 bg-green-700 text-white py-2.5 rounded-full font-bold text-sm hover:bg-green-800">🛒 Add to Cart</button><button onclick="openProduct(${p.id})" class="w-10 h-10 border rounded-full">👁️</button></div></div></div>`).join('');}
+function setCat(c,el){currentCat=c;document.querySelectorAll('.cat-btn').forEach(b=>{b.className='cat-btn bg-white px-5 py-2 rounded-full whitespace-nowrap font-semibold border'});el.className='cat-btn bg-green-700 text-white px-5 py-2 rounded-full whitespace-nowrap font-semibold';renderProducts();}
+function filterProducts(){renderProducts();}
+
+function openProduct(id){let p=products.find(x=>x.id===id);document.getElementById('modalContent').innerHTML=`<div class="grid md:grid-cols-2"><div><img src="${p.img}" class="w-full h-[320px] md:h-full object-cover"><div class="flex gap-2 p-3"><img src="${p.img}" class="w-20 h-20 object-cover rounded-xl border-2 border-green-600"><img src="https://images.unsplash.com/photo-1542838132-92c53300491e?w=200&q=80" class="w-20 h-20 object-cover rounded-xl opacity-70"><img src="https://images.unsplash.com/photo-1466637574441-749b8f19452f?w=200&q=80" class="w-20 h-20 object-cover rounded-xl opacity-70"></div></div><div class="p-6 md:p-8"><span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-bold">${p.cat} • ইন স্টক ✅</span><h2 class="text-2xl md:text-3xl font-bold mt-3">${p.name}</h2><div class="mt-2">${stars(p.rating)} • ${p.reviews} রিভিউ</div><div class="flex gap-3 items-center mt-3"><b class="text-3xl text-green-700">${p.price}৳</b><s class="text-slate-400">${p.old}৳</s><span class="bg-red-100 text-red-600 px-2 py-1 rounded-full text-xs font-bold">SAVE ${p.old-p.price}৳</span></div><p class="text-slate-600 mt-4 leading-relaxed">${p.desc} — ১০০% অর্গানিক, ল্যাব টেস্টেড, ভেজাল প্রমাণে টাকা ফেরত।</p><div class="mt-4"><b>পরিমাণ:</b><div class="flex items-center gap-3 mt-2"><button onclick="changeQty(-1)" class="w-9 h-9 border rounded-full">-</button><span id="qtyVal" class="font-bold text-lg">1</span><button onclick="changeQty(1)" class="w-9 h-9 border rounded-full">+</button></div></div><div class="flex gap-2 mt-5"><button onclick="addToCart(${p.id}, parseInt(document.getElementById('qtyVal').innerText));closeModal()" class="flex-1 bg-green-700 text-white py-3.5 rounded-full font-bold">🛒 কার্টে অ্যাড করুন</button><button onclick="toggleWish(${p.id})" class="w-12 h-12 border rounded-full">❤️</button></div><div class="bg-slate-50 rounded-2xl p-4 mt-5 text-sm"><b>💳 পেমেন্ট:</b> ক্যাশ অন ডেলিভারি • bKash • Nagad • Rocket • Upay<br><b>🚚 ডেলিভারি:</b> ঢাকা ২৪ ঘণ্টা, সারা দেশ ৪৮ ঘণ্টা</div><div class="mt-5"><b>⭐ কাস্টমার রিভিউ</b><div class="mt-2 space-y-2 text-sm"><p>⭐⭐⭐⭐⭐ <b>রহিমা খাতুন</b> - খুবই ভালো, আবার নিবো।</p><p>⭐⭐⭐⭐⭐ <b>করিম শেখ</b> - একদম খাঁটি মনে হলো।</p></div></div></div></div>`;document.getElementById('productModal').classList.replace('hidden','flex');}
+function closeModal(){document.getElementById('productModal').classList.replace('flex','hidden')}
+let qty=1; function changeQty(d){qty=Math.max(1,qty+d);document.getElementById('qtyVal').innerText=qty}
+
+function addToCart(id,q=1){let f=cart.find(c=>c.id===id);if(f)f.qty+=q;else cart.push({id,qty:q});updateCart();showToast('✅ কার্টে অ্যাড হয়েছে!');}
+function updateCart(){document.getElementById('cartCount').innerText=cart.reduce((a,c)=>a+c.qty,0);let total=cart.reduce((a,c)=>a+products.find(p=>p.id===c.id).price*c.qty,0);document.getElementById('cartTotal').innerText=total+'৳';document.getElementById('cartItems').innerHTML=cart.length?cart.map(c=>{let p=products.find(x=>x.id===c.id);return `<div class="flex gap-3 bg-slate-50 rounded-2xl p-3"><img src="${p.img}" class="w-16 h-16 object-cover rounded-xl"><div class="flex-1"><b class="text-sm">${p.name}</b><p class="text-green-700 font-bold">${p.price}৳ x ${c.qty}</p><div class="flex gap-2 mt-1"><button onclick="cartQty(${c.id},-1)" class="w-6 h-6 border rounded-full">-</button><span>${c.qty}</span><button onclick="cartQty(${c.id},1)" class="w-6 h-6 border rounded-full">+</button></div></div><button onclick="removeCart(${c.id})" class="text-red-500">🗑️</button></div>`}).join(''):'<p class="text-center text-slate-400 py-10">কার্ট খালি। প্রোডাক্ট অ্যাড করুন।</p>';}
+function cartQty(id,d){let it=cart.find(c=>c.id===id);it.qty+=d;if(it.qty<=0)cart=cart.filter(c=>c.id!==id);updateCart();}
+function removeCart(id){cart=cart.filter(c=>c.id!==id);updateCart();}
+function toggleWish(id){if(wishlist.includes(id))wishlist=wishlist.filter(w=>w!==id);else{wishlist.push(id);showToast('❤️ উইশলিস্টে অ্যাড হয়েছে');}document.getElementById('wishCount').innerText=wishlist.length;document.getElementById('wishItems').innerHTML=wishlist.length?wishlist.map(wid=>{let p=products.find(x=>x.id===wid);return `<div class="flex gap-3 bg-slate-50 rounded-2xl p-3"><img src="${p.img}" class="w-16 h-16 object-cover rounded-xl"><div class="flex-1"><b>${p.name}</b><p class="text-green-700 font-bold">${p.price}৳</p><button onclick="addToCart(${p.id});closeDrawer('wishlistDrawer')" class="bg-green-700 text-white px-4 py-1.5 rounded-full text-sm mt-1">Add to Cart</button></div></div>`}).join(''):'<p class="text-center text-slate-400 py-10">উইশলিস্ট খালি</p>';renderProducts();}
+function checkout(){if(!cart.length){showToast('⚠️ কার্ট খালি!');return}showToast('🎉 অর্ডার সফল! আমরা কল করবো।');cart=[];updateCart();closeDrawer('cartDrawer');}
+function openDrawer(id){document.getElementById(id).classList.remove('hidden')} function closeDrawer(id){document.getElementById(id).classList.add('hidden')}
+function toggleMenu(){document.getElementById('mobileMenu').classList.toggle('hidden')}
+function notifyMe(btn){btn.innerText='✅ Notified!';btn.classList.add('bg-green-700');showToast('🔔 আসলেই নোটিফিকেশন পাবেন!')}
+function showToast(msg){let t=document.getElementById('toast');t.innerText=msg;t.classList.remove('hidden');setTimeout(()=>t.classList.add('hidden'),2500)}
+
+const reviews=[{name:"রহিমা খাতুন, খুলনা",text:"মধুটা একদম খাঁটি। বাচ্চাদের জন্য নিলাম, খুব ভালো লেগেছে। আবার অর্ডার করবো।",img:"https://i.pravatar.cc/100?img=47",stars:5},{name:"আরিফ হোসেন, ঢাকা",text:"ঘি আর সরিষার তেলের কোয়ালিটি অসাধারণ। দাম একটু বেশি হলেও জিনিস ১০০% অরিজিনাল।",img:"https://i.pravatar.cc/100?img=12",stars:5},{name:"নুসরাত জাহান, যশোর",text:"ডেলিভারি খুব ফাস্ট। ১ দিনেই পেয়ে গেছি। প্যাকেজিং ও খুব সুন্দর ছিল।",img:"https://i.pravatar.cc/100?img=32",stars:5},{name:"করিম শেখ, সাতক্ষীরা",text:"চালটা রান্না করে দেখলাম, একদম গ্রামের স্বাদ। এখন থেকে এখান থেকেই নিবো।",img:"https://i.pravatar.cc/100?img=68",stars:5}];
+function renderReviews(){document.getElementById('reviewTrack').innerHTML=reviews.map(r=>`<div class="min-w-full md:min-w-[50%] px-2"><div class="bg-white rounded-[28px] shadow-lg p-6 border-t-4 border-green-600"><div class="flex gap-1 text-yellow-500 text-lg">${'★'.repeat(r.stars)}</div><p class="mt-3 text-slate-600 leading-relaxed">"${r.text}"</p><div class="flex items-center gap-3 mt-4"><img src="${r.img}" class="w-12 h-12 rounded-full"><div><b>${r.name}</b><p class="text-xs text-green-600">✅ Verified Buyer</p></div></div></div></div>`).join('');}
+function reviewNext(){reviewIdx=(reviewIdx+1)%(reviews.length-1);document.getElementById('reviewTrack').style.transform=`translateX(-${reviewIdx*50}%)`} function reviewPrev(){reviewIdx=(reviewIdx-1+reviews.length-1)%(reviews.length-1);document.getElementById('reviewTrack').style.transform=`translateX(-${reviewIdx*50}%)`}
+function addComment(){let n=document.getElementById('cName').value||'অতিথি';let t=document.getElementById('cText').value;if(!t)return showToast('⚠️ কমেন্ট লিখুন');document.getElementById('commentList').innerHTML+=`<div class="bg-slate-50 rounded-2xl p-4"><b>${n}</b><p class="text-sm text-slate-600 mt-1">${t}</p></div>`;document.getElementById('cText').value='';showToast('✅ কমেন্ট পোস্ট হয়েছে');}
+
+// Scroll Reveal
+const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('active')}),{threshold:.1});
+document.addEventListener('DOMContentLoaded',()=>{renderHero();renderProducts();renderReviews();updateCart();document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));});
+</script>
+</body>
+</html>
