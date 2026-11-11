@@ -138,10 +138,8 @@ tailwind.config = {
   <div class="max-w-7xl mx-auto px-4 lg:px-6 flex items-center justify-between h-[72px] gap-4">
     <button onclick="toggleMenu()" class="lg:hidden w-10 h-10 rounded-full bg-stone-100 hover:bg-stone-200 flex items-center justify-center text-lg transition"><i class="fa-solid fa-bars"></i></button>
     <a href="#" class="flex items-center gap-2.5 shrink-0 group">
-      <div class="w-11 h-11 bg-gradient-to-br from-brand-600 to-brand-800 rounded-2xl flex items-center justify-center text-white text-xl font-extrabold shadow-lg shadow-brand-900/20 rotate-3 group-hover:rotate-0 transition duration-300 font-display">S</div>
-      <div class="leading-none">
-        <h1 class="font-display font-extrabold text-[21px] text-stone-900 tracking-tight">Shopner <span class="text-accent-500">Ponno</span></h1>
-        <p class="text-[10px] tracking-[2.5px] text-brand-700 font-bold mt-1">YOUR DREAM SHOP</p>
+       <div class="leading-none">
+        <img src="img/logo.png" class="w-[100px]">
       </div>
     </a>
     <nav class="hidden lg:flex items-center gap-8 font-semibold text-[14.5px] text-stone-700">
@@ -305,7 +303,8 @@ tailwind.config = {
 </section>
 
 <!-- PAYMENT METHODS -->
-<section class="max-w-7xl mx-auto px-4 lg:px-6 pb-14">
+<section class=" bg-gradient-to-r from-stone-950/90 via-stone-950/60 to-stone-950/20 pt-20">
+	<div class="max-w-7xl mx-auto px-4 lg:px-6 pb-14">
   <div class="bg-white rounded-3xl shadow-card p-6 md:p-8 border border-stone-100">
     <h3 class="font-display font-bold text-xl mb-5 flex items-center gap-2"><i class="fa-solid fa-credit-card text-brand-700"></i> পেমেন্ট অপশন</h3>
     <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 text-center">
@@ -317,10 +316,11 @@ tailwind.config = {
       <div class="border border-stone-200 rounded-2xl py-5 hover:border-stone-400 hover:shadow-soft hover:-translate-y-0.5 transition cursor-pointer"><i class="fa-solid fa-building-columns text-2xl text-stone-700"></i><p class="text-[12px] mt-2 font-semibold">ব্যাংক ট্রান্সফার</p></div>
     </div>
   </div>
+  </div>
 </section>
 
 <!-- FOOTER -->
-<footer id="contact" class="bg-stone-950 text-white pt-16 pb-8 mt-6">
+<footer id="contact" class="bg-white/60 text-black pt-16 pb-8 mt-6">
   <div class="max-w-7xl mx-auto px-4 lg:px-6">
     <div class="bg-gradient-to-r from-brand-800 to-brand-700 rounded-3xl p-6 md:p-10 mb-14 flex flex-col md:flex-row items-center justify-between gap-6">
       <div class="text-center md:text-left">
@@ -333,43 +333,44 @@ tailwind.config = {
       </div>
     </div>
     <div class="grid md:grid-cols-4 gap-10">
-      <div class="md:col-span-2">
+      <div>
         <div class="flex items-center gap-2.5">
-          <div class="w-11 h-11 bg-brand-700 rounded-2xl flex items-center justify-center text-white text-xl font-extrabold font-display">S</div>
-          <h3 class="font-display font-bold text-2xl">Shopner <span class="text-accent-400">Ponno</span></h3>
+			<img src="img/footer-logo.png" class="w-[200px]">
         </div>
-        <p class="text-white/60 text-sm mt-4 max-w-md leading-relaxed">খুলনা, বাংলাদেশ • সকাল ৯টা - রাত ১০টা<br>খামার থেকে সরাসরি আপনার টেবিলে — ১০০% অর্গানিক, ল্যাব টেস্টেড, ভেজাল প্রমাণে টাকা ফেরত।</p>
-        <div class="flex gap-3 mt-5">
-          <a href="#" class="w-10 h-10 rounded-full bg-white/10 hover:bg-brand-600 flex items-center justify-center transition"><i class="fa-brands fa-facebook-f"></i></a>
-          <a href="#" class="w-10 h-10 rounded-full bg-white/10 hover:bg-pink-600 flex items-center justify-center transition"><i class="fa-brands fa-instagram"></i></a>
-          <a href="#" class="w-10 h-10 rounded-full bg-white/10 hover:bg-red-600 flex items-center justify-center transition"><i class="fa-brands fa-youtube"></i></a>
-          <a href="#" onclick="event.preventDefault();openWhatsApp()" class="w-10 h-10 rounded-full bg-white/10 hover:bg-green-600 flex items-center justify-center transition"><i class="fa-brands fa-whatsapp"></i></a>
-        </div>
-        <div class="mt-5 flex flex-col gap-2 text-sm text-white/70">
-          <a href="tel:+8801971172307" class="flex items-center gap-2 hover:text-white"><i class="fa-solid fa-phone text-brand-400 w-4"></i> +8801971-172307</a>
-          <a href="mailto:hello@shopnerponno.com" class="flex items-center gap-2 hover:text-white"><i class="fa-solid fa-envelope text-brand-400 w-4"></i> hello@shopnerponno.com</a>
-        </div>
+        <p class="text-black/60 text-sm mt-4 max-w-md leading-relaxed">খুলনা, বাংলাদেশ • সকাল ৯টা - রাত ১০টা<br>খামার থেকে সরাসরি আপনার টেবিলে — ১০০% অর্গানিক, ল্যাব টেস্টেড, ভেজাল প্রমাণে টাকা ফেরত।</p>
+
+
       </div>
       <div>
-        <b class="text-white text-sm font-display">দ্রুত লিংক</b>
-        <ul class="text-white/60 text-sm mt-3 space-y-2">
-          <li><a href="#home" class="hover:text-white transition">হোম</a></li>
-          <li><a href="#products" class="hover:text-white transition">প্রোডাক্ট</a></li>
-          <li><a href="#about" class="hover:text-white transition">আমাদের গল্প</a></li>
-          <li><a href="#reviews" class="hover:text-white transition">রিভিউ</a></li>
-          <li><a href="#" class="hover:text-white transition">ট্র্যাক অর্ডার</a></li>
+        <b class="text-black text-sm font-display">দ্রুত লিংক</b>
+        <ul class="text-black/60 text-sm mt-3 space-y-2">
+          <li><a href="#home" class="hover:text-black transition">হোম</a></li>
+          <li><a href="#products" class="hover:text-black transition">প্রোডাক্ট</a></li>
+          <li><a href="#about" class="hover:text-black transition">আমাদের গল্প</a></li>
+          <li><a href="#reviews" class="hover:text-black transition">রিভিউ</a></li>
+          <li><a href="#" class="hover:text-black transition">ট্র্যাক অর্ডার</a></li>
         </ul>
       </div>
       <div>
-        <b class="text-white text-sm font-display">সাপোর্ট</b>
-        <ul class="text-white/60 text-sm mt-3 space-y-2">
-          <li><a href="#" class="hover:text-white transition">রিটার্ন পলিসি</a></li>
-          <li><a href="#" class="hover:text-white transition">প্রাইভেসি পলিসি</a></li>
-          <li><a href="#" class="hover:text-white transition">শিপিং ইনফো</a></li>
-          <li><a href="#" class="hover:text-white transition">FAQ</a></li>
-          <li><a href="#contact" class="hover:text-white transition">যোগাযোগ</a></li>
+        <b class="text-black text-sm font-display">সাপোর্ট</b>
+        <ul class="text-black/60 text-sm mt-3 space-y-2">
+          <li><a href="#" class="hover:text-black transition">রিটার্ন পলিসি</a></li>
+          <li><a href="#" class="hover:text-black transition">প্রাইভেসি পলিসি</a></li>
+          <li><a href="#" class="hover:text-black transition">শিপিং ইনফো</a></li>
+          <li><a href="#" class="hover:text-black transition">FAQ</a></li>
+          <li><a href="#contact" class="hover:text-black transition">যোগাযোগ</a></li>
         </ul>
       </div>
+	          <div class="mt-5 flex flex-col gap-2 text-sm text-black/70">
+			          <div class="flex gap-3 mt-5">
+          <a href="#" class="w-10 h-10 rounded-full bg-black/10 hover:bg-brand-600 flex items-center justify-center transition"><i class="fa-brands fa-facebook-f"></i></a>
+          <a href="#" class="w-10 h-10 rounded-full bg-black/10 hover:bg-pink-600 flex items-center justify-center transition"><i class="fa-brands fa-instagram"></i></a>
+          <a href="#" class="w-10 h-10 rounded-full bg-black/10 hover:bg-red-600 flex items-center justify-center transition"><i class="fa-brands fa-youtube"></i></a>
+          <a href="#" onclick="event.preventDefault();openWhatsApp()" class="w-10 h-10 rounded-full bg-black/10 hover:bg-green-600 flex items-center justify-center transition"><i class="fa-brands fa-whatsapp"></i></a>
+        </div>
+          <a href="tel:+8801971172307" class="flex items-center gap-2 hover:text-black"><i class="fa-solid fa-phone text-brand-400 w-4"></i> +8801971-172307</a>
+          <a href="mailto:hello@shopnerponno.com" class="flex items-center gap-2 hover:text-black"><i class="fa-solid fa-envelope text-brand-400 w-4"></i> hello@shopnerponno.com</a>
+        </div>
     </div>
     <div class="divider my-8"></div>
     <div class="flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-white/40">
